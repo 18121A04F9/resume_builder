@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* ── Minimal Modern Palette (Light) ── */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6%;
+
+    /* Accent — Overleaf-inspired green (user-changeable) */
+    --primary: 142 72% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 20%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 93%;
+    --accent-foreground: 0 0% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 142 72% 40%;
+    --radius: 0.75rem;
+
+    /* ── Brand tokens ── */
+    --brand-green: #16a34a;
+    --brand-green-light: #22c55e;
+    --brand-green-dim: rgba(22, 163, 74, 0.12);
+  }
+
+  .dark {
+    /* ── Minimal Modern Palette (Rich Zinc Dark) ── */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 5%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 5%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 72% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 12.9%;
+    --input: 240 3.7% 12.9%;
+    --ring: 142 72% 45%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: 1.6;
+  }
+}
+
+@layer utilities {
+  /* ── Accent gradient text ── */
+  .gradient-text {
+    background: linear-gradient(135deg, var(--brand-green) 0%, #4ade80 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Glass card ── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .dark .glass-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── Compile button (Overleaf-style) ── */
+  .compile-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    background: var(--brand-green);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    transition: background 150ms ease, transform 100ms ease, box-shadow 150ms ease;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.35);
+  }
+  .compile-btn:hover {
+    background: #15803d;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45);
+    transform: translateY(-1px);
+  }
+  .compile-btn:active {
+    transform: translateY(0);
+  }
+  .compile-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── Scrollbar thin ── */
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; height: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 50%);
+  }
+
+  /* ── Scrollbar none (for tab bars) ── */
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+
+  /* ── Form field base ── */
+  .field-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    border-radius: 0.375rem;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    transition: border-color 150ms, box-shadow 150ms;
+    outline: none;
+    line-height: 1.5;
+  }
+  .field-input:focus {
+    border-color: hsl(var(--primary) / 70%);
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 12%);
+  }
+  .field-input::placeholder {
+    color: hsl(var(--muted-foreground) / 60%);
+    font-size: 0.8rem;
+  }
+  .field-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.875rem;
+  }
+
+  /* ── Resume A4 page ── */
+  .resume-page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #ffffff;
+    color: #0a0a0a;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.06),
+      0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  /* ── Section divider decoration ── */
+  .section-rule {
+    border: none;
+    border-top: 1.5px solid currentColor;
+    opacity: 0.15;
+    margin-block: 0.75rem;
+  }
+
+  /* ── Stale compile badge ── */
+  .stale-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+  }
+  .stale-badge::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f59e0b;
+  }
+
+  /* ── Compiled badge ── */
+  .compiled-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--brand-green);
+  }
+  .compiled-badge::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-green);
+  }
+}
+
+/* ════════════════════════════════════════
+   PRINT — Full A4 PDF output
+   ════════════════════════════════════════ */
+@media print {
+  /* Hide everything except the resume */
+  body > * { display: none !important; }
+  #resume-print-root,
+  #resume-print-root * { display: block !important; }
+
+  /* Also support legacy .no-print + direct .resume-page */
+  .no-print { display: none !important; }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  .resume-page {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-after: always;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
